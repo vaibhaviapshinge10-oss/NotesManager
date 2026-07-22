@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import Note
 
 def home(request):
     return render(request, "home.html")
@@ -35,8 +37,18 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect("home")
+            return redirect("dashboard")
         else:
             messages.error(request, "Invalid username or password.")
 
     return render(request, "login.html")
+
+@login_required
+def dashboard(request):
+    notes = Note.objects.filter(user=request.user).order_by('-created_at')
+
+    context = {
+        'notes': notes
+    }
+
+    return render(request, 'dashboard.html', context)
