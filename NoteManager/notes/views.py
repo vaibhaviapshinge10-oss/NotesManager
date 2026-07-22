@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Note
+from django.shortcuts import get_object_or_404
 
 def home(request):
     return render(request, "home.html")
@@ -69,3 +70,29 @@ def add_note(request):
         form = NoteForm()
 
     return render(request, "add_note.html", {"form": form})
+
+@login_required
+def edit_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    if request.method == "POST":
+        form = NoteForm(request.POST, instance=note)
+
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard")
+
+    else:
+        form = NoteForm(instance=note)
+
+    return render(request, "edit_note.html", {"form": form})
+
+@login_required
+def delete_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id, user=request.user)
+
+    if request.method == "POST":
+        note.delete()
+        return redirect("dashboard")
+
+    return render(request, "delete_note.html", {"note": note})
