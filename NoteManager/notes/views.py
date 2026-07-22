@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, NoteForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -52,3 +52,20 @@ def dashboard(request):
     }
 
     return render(request, 'dashboard.html', context)
+
+@login_required
+def add_note(request):
+    if request.method == "POST":
+        form = NoteForm(request.POST)
+
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+
+            return redirect("dashboard")
+
+    else:
+        form = NoteForm()
+
+    return render(request, "add_note.html", {"form": form})
