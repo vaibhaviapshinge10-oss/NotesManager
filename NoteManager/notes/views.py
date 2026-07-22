@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Note
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import logout
 
 def home(request):
     return render(request, "home.html")
@@ -96,3 +97,8 @@ def delete_note(request, note_id):
         return redirect("dashboard")
 
     return render(request, "delete_note.html", {"note": note})
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect("home")
