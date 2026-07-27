@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Note
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import NoteSerializer
 
 def home(request):
     return render(request, "home.html")
@@ -102,3 +105,9 @@ def delete_note(request, note_id):
 def logout_user(request):
     logout(request)
     return redirect("home")
+
+@api_view(['GET'])
+def notes_api(request):
+    notes = Note.objects.all()
+    serializer = NoteSerializer(notes, many=True)
+    return Response(serializer.data)
