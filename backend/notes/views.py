@@ -6,8 +6,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Note
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import logout
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+
 from .serializers import NoteSerializer
 
 def home(request):
@@ -106,8 +109,33 @@ def logout_user(request):
     logout(request)
     return redirect("home")
 
-@api_view(['GET'])
+   
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def notes_api(request):
-    notes = Note.objects.all()
+    notes = Note.objects.filter(user=request.user)
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
+    
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def note_detail_api(request, pk):
+
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+
+    if request.method == "GET":
+        serializer = NoteSerializer(note)
+        return Response(serializer.data)
+
+    elif request.method == "PUT":
+        serializer = NoteSerializer(note, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        note.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
