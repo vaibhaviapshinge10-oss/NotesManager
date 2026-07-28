@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
-from .serializers import NoteSerializer
+from .serializers import NoteSerializer, RegisterSerializer
 
 def home(request):
     return render(request, "home.html")
@@ -139,3 +139,15 @@ def note_detail_api(request, pk):
     elif request.method == "DELETE":
         note.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+def register_api(request):
+
+    serializer = RegisterSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST)

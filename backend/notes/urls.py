@@ -11,4 +11,5 @@ urlpatterns = [
     path("delete-note/<int:note_id>/", views.delete_note, name="delete_note"),
     path("logout/", views.logout_user, name="logout"),
     path("api/notes", views.notes_api, name="notes_api"),
+    path("api/register", views.register_api, name="register_api"),
 ]
