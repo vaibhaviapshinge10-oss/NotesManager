@@ -12,4 +12,5 @@ urlpatterns = [
     path("logout/", views.logout_user, name="logout"),
     path("api/notes", views.notes_api, name="notes_api"),
     path("api/register", views.register_api, name="register_api"),
+    path("api/notes/<int:pk>", views.note_detail_api, name="note_detail_api"),
 ]

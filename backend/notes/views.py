@@ -113,9 +113,28 @@ def logout_user(request):
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def notes_api(request):
-    notes = Note.objects.filter(user=request.user)
-    serializer = NoteSerializer(notes, many=True)
-    return Response(serializer.data)
+
+    if request.method == "GET":
+
+        notes = Note.objects.filter(user=request.user)
+
+        serializer = NoteSerializer(notes, many=True)
+
+        return Response(serializer.data)
+
+    elif request.method == "POST":
+
+        serializer = NoteSerializer(data=request.data)
+
+        if serializer.is_valid():
+
+            serializer.save(user=request.user)
+
+            return Response(serializer.data,
+                            status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
