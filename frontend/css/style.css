@@ -1,0 +1,119 @@
+/* ==========================================================
+   Notes Manager - Shared Stylesheet
+   Used by: login.html, register.html, dashboard.html,
+            add_note.html, edit_note.html
+   ========================================================== */
+
+body {
+    background-color: #f4f6f9;
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+/* ---------- Auth pages (Login / Register) ---------- */
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+}
+
+.auth-card h2 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.auth-card .form-control {
+    padding: 0.65rem 0.9rem;
+}
+
+.auth-switch-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+/* ---------- Navbar (Dashboard) ---------- */
+
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* ---------- Dashboard / Notes ---------- */
+
+.page-wrapper {
+    padding: 2rem 1rem 3rem;
+}
+
+.section-heading {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.note-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    height: 100%;
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.note-card .card-title {
+    font-weight: 600;
+    color: #2c3e50;
+    word-break: break-word;
+}
+
+.note-card .card-text {
+    color: #555;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.empty-state {
+    text-align: center;
+    color: #888;
+    padding: 3rem 1rem;
+}
+
+/* ---------- Add / Edit Note form pages ---------- */
+
+.form-card {
+    max-width: 600px;
+    margin: 2.5rem auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+}
+
+.form-card h2 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.form-card textarea {
+    min-height: 150px;
+    resize: vertical;
+}

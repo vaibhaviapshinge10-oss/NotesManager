@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Note</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">📝 Notes Manager</span>
+            <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-card">
+
+            <h2>Edit Note</h2>
+
+            <form id="noteForm">
+
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea
+                        class="form-control"
+                        id="content"
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-warning w-100">
+                    Update Note
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="js/edit_note.js"></script>
+
+</body>
+</html>
